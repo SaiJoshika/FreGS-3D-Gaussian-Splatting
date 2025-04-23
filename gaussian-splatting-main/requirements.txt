@@ -1,0 +1,8 @@
+torch>=2.1.0      # install the CUDA‑enabled wheel that matches your GPU/driver
+torchvision
+tqdm
+numpy
+scipy
+imageio
+opencv-python
+matplotlib
