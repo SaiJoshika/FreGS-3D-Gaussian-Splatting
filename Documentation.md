@@ -1,0 +1,1 @@
+Mip-Splatting is a method for alias-free novel view synthesis using 3D Gaussian Splatting. It addresses key artifacts (like erosion, dilation, and aliasing) seen in previous 3DGS methods when rendering at sampling rates different from training.
