@@ -5,24 +5,24 @@ Mip-Splatting is a method for alias-free novel view synthesis using 3D Gaussian 
 1) Represents scenes with 3D Gaussians.
 2) Renders by projecting them to 2D via splatting.
 3) Uses a 2D dilation filter in screen space.
-4)Suffers from rendering artifacts at different zoom levels due to lack of frequency control.
+4) Suffers from rendering artifacts at different zoom levels due to lack of frequency control.
 
 Key Concepts:
-1. 3D Smoothing Filter:
-Applies a low-pass filter in 3D space.
-Based on the Nyquist-Shannon theorem.
-Constrains the maximum frequency of each Gaussian.
-Prevents high-frequency artifacts when zooming in.
+3D Smoothing Filter:
+1. Applies a low-pass filter in 3D space.
+2. Based on the Nyquist-Shannon theorem.
+3. Constrains the maximum frequency of each Gaussian.
+4. Prevents high-frequency artifacts when zooming in.
 
-2. 2D Mip Filter:
-Replaces the 2D dilation.
-Simulates a 2D box filter (like mipmapping).
-Approximated with a Gaussian filter covering one pixel.
-Removes aliasing and improves rendering when zooming out.
+2D Mip Filter:
+1. Replaces the 2D dilation.
+2. Simulates a 2D box filter (like mipmapping).
+3. Approximated with a Gaussian filter covering one pixel.
+4. Removes aliasing and improves rendering when zooming out.
 
 Implementation:
-Recomputes sampling rates every 100 iterations.
-Lightweight modifications with high performance gain.
+1. Recomputes sampling rates every 100 iterations.
+2. Lightweight modifications with high performance gain.
 
 Experimental Results:
 1) Evaluation Datasets
@@ -34,9 +34,9 @@ Maintains fidelity in both zoom-in and zoom-out rendering.
 Especially effective when training at a single scale and testing across many.
 
 Limitations:
-Approximation of box filter using Gaussian introduces small errors.
-Slight training overhead due to sampling rate computation.
-Performance might drop when zooming out extremely far.
+1. Approximation of box filter using Gaussian introduces small errors.
+2. Slight training overhead due to sampling rate computation.
+3. Performance might drop when zooming out extremely far.
 
 Output:
 
