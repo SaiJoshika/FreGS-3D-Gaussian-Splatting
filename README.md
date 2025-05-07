@@ -93,4 +93,3 @@ Then use our [online viewer](https://niujinshuchong.github.io/mip-splatting-demo
 
 
 
-
