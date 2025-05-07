@@ -1,6 +1,8 @@
 # Mip-Splatting: Alias-Free 3D Gaussian Splatting
 
 A principled extension to 3D Gaussian Splatting that eliminates zoom-dependent artifacts by enforcing frequency constraints in 3D and applying a dynamic, zoom-aware filter in screen space.
+![Screenshot 2025-05-06 212405](https://github.com/user-attachments/assets/6af221d8-1fde-406a-9d89-ce2eb4156243)
+
 
 
 ## 1. Introduction
