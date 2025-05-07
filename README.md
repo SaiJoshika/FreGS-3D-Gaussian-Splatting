@@ -2,7 +2,7 @@
 
 A principled extension to 3D Gaussian Splatting that eliminates zoom-dependent artifacts by enforcing frequency constraints in 3D and applying a dynamic, zoom-aware filter in screen space.
 
-
+![Output](441041164-62af74e1-8375-4a35-a28e-30f67e5747c6.png)
 ## 1. Introduction
 
 Mip-Splatting addresses the limitations of standard 3D Gaussian Splatting (3DGS) when changing the camera’s sampling rate (via focal length or distance). While 3DGS excels at real-time novel view synthesis, it suffers from:
