@@ -1,28 +1,55 @@
-# FreGS-3D-Gaussian-Splatting
+# Mip-Splatting: Alias-Free 3D Gaussian Splatting
 
-#### **1. Introduction**  
-- **3D Gaussian Splatting (3D-GS)** is a technique for rendering 3D scenes by representing them as a collection of **3D Gaussians**.  
-- However, 3D-GS suffers from **over-reconstruction**, leading to blurry images and inefficient Gaussian placement.  
-- The paper proposes **FreGS (Frequency Regularized Gaussian Splatting)** to address this issue using **progressive frequency regularization**.  
+A principled extension to 3D Gaussian Splatting that eliminates zoom-dependent artifacts by enforcing frequency constraints in 3D and applying a dynamic, zoom-aware filter in screen space.
 
-#### **2. Key Contributions**  
-1. **FreGS Framework** – Introduces **frequency regularization** to control Gaussian density and prevent over-reconstruction.  
-2. **Frequency Annealing** – Uses a **coarse-to-fine** approach, progressively refining Gaussians by optimizing **low-to-high frequency details**.  
-3. **Improved Novel View Synthesis** – FreGS outperforms standard **3D-GS** on datasets like **Mip-NeRF360, Tanks & Temples, and Deep Blending**.  
 
-#### **3. Methodology**  
-- **Step 1: Structure-from-Motion (SfM)** → Extracts **3D points** from input images.  
-- **Step 2: Gaussian Initialization** → Converts points into **3D Gaussians**.  
-- **Step 3: Rendering with Gaussian Splatting** → Projects **3D Gaussians into 2D images**.  
-- **Step 4: Frequency Regularization**  
-  - Uses **Fourier Transform** to compare the **amplitude and phase components** of rendered images vs. ground truth.  
-  - Adjusts Gaussian density using **progressive frequency annealing**.  
+## 1. Introduction
 
-#### **4. Experimental Results**  
-- **FreGS produces sharper, more detailed images** compared to standard 3D-GS.  
-- Evaluations on multiple datasets show **higher reconstruction accuracy**.  
+Mip-Splatting addresses the limitations of standard 3D Gaussian Splatting (3DGS) when changing the camera’s sampling rate (via focal length or distance). While 3DGS excels at real-time novel view synthesis, it suffers from:
 
-#### **5. Limitations & Future Work**  
-- Increased **computational overhead** due to frequency analysis.  
-- Struggles with **extremely high-frequency details**.  
-- Future work could focus on **real-time performance improvements** and **adaptive Gaussian placement**.  
+* **Zoom-In Erosion:** Thin structures vanish when magnified because a fixed screen-space dilation is too small.
+* **Zoom-Out Aliasing & Over-Dilation:** Distant blobs appear bloated and produce jagged/flickering edges due to constant dilation and lack of low-pass filtering.
+
+This work introduces two lightweight, principled filters—applied during training and rendering—to guarantee artifact-free results across arbitrary zoom levels.
+
+
+## 2. Key Contributions
+
+1. **3D Frequency Regularization**
+
+   * A 3D low-pass filter that constrains each Gaussian’s maximal frequency based on its highest sampling rate during training.
+2. **2D Mip Filter**
+
+   * A screen-space, zoom-aware Gaussian approximation of a box filter that adapts blur to each splat’s pixel footprint, eliminating aliasing and over-dilation.
+
+
+## 3. Methodology
+
+### 3.1 3D Frequency Regularization
+
+1. **Compute Maximal Sampling Rate:** Track each Gaussian’s smallest pixel footprint across all training views.
+2. **Nyquist Covariance:** Derive a low-pass Gaussian whose standard deviation equals half that footprint (Nyquist limit).
+3. **Analytic Fusion:** Add the Nyquist covariance to the original 3D covariance per Gaussian:
+   $\Sigma_{3D}' = \Sigma_{3D} + \Sigma_{nyquist}$
+
+### 3.2 2D Mip Filter
+
+1. **Screen-Space Footprint:** For each projected splat, compute its on-screen width *w* via the projection Jacobian.
+2. **Adaptive Dilation:** Set 2D blur σ₂D = *w*/2 and incorporate into the 2D covariance
+
+3. **Result:** Each splat uses just enough blur—more when small (avoid aliasing), less when large (preserve detail).
+
+
+## 4. Experimental Results
+
+* **Single-Scale Training, Multi-Scale Testing:** Mip-Splatting maintains or improves PSNR/SSIM/LPIPS across focal scales (½×, 2×, 4×) compared to 3DGS and EWA variants.
+* **Benchmarks:** On Blender \[28] and Mip-NeRF 360 \[2], our method outperforms prior art in out-of-distribution zoom settings while matching state-of-the-art at training scale.
+* **Qualitative:** Eliminates erosion of thin structures and prevents bloated halos or shimmering at distant views.
+
+---
+
+## 5. Limitations & Future Work
+
+* **Gaussian Approximation Error:** The 2D Gaussian approximation of a box filter can introduce small errors at extreme zoom levels.
+* **Training Overhead:** Computing per-Gaussian sampling rates every *m* iterations adds minimal overhead; optimized CUDA kernels could further reduce this cost.
+* **Extension:** Exploring more accurate filter shapes or precomputed data structures for real-time sampling-rate lookups.
