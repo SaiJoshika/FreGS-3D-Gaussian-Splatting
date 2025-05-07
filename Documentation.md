@@ -26,13 +26,13 @@ Implementation:
 
 Experimental Results:
 1) Evaluation Datasets:
-1. Blender Dataset: Used for zoom-out tests.
-2. Mip-NeRF 360 Dataset: Used for zoom-in tests.
+   Blender Dataset: Used for zoom-out tests.
+   Mip-NeRF 360 Dataset: Used for zoom-in tests.
    
 2) Performance Summary:
-1. Outperforms previous methods like NeRF, 3DGS, EWA splatting across scales.
-2. Maintains fidelity in both zoom-in and zoom-out rendering.
-3. Especially effective when training at a single scale and testing across many.
+   Outperforms previous methods like NeRF, 3DGS, EWA splatting across scales.
+   Maintains fidelity in both zoom-in and zoom-out rendering.
+   Especially effective when training at a single scale and testing across many.
 
 Limitations:
 1. Approximation of box filter using Gaussian introduces small errors.
