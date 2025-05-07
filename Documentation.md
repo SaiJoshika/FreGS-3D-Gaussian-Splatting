@@ -1,3 +1,4 @@
+Mip-Splatting – Alias-free 3D Gaussian Splatting:
 Mip-Splatting is a method for alias-free novel view synthesis using 3D Gaussian Splatting. It addresses key artifacts (like erosion, dilation, and aliasing) seen in previous 3DGS methods when rendering at sampling rates different from training.
 
 3D Gaussian Splatting (3DGS):
@@ -6,6 +7,7 @@ Mip-Splatting is a method for alias-free novel view synthesis using 3D Gaussian 
 3) Uses a 2D dilation filter in screen space.
 4)Suffers from rendering artifacts at different zoom levels due to lack of frequency control.
 
+Key Concepts:
 1. 3D Smoothing Filter:
 Applies a low-pass filter in 3D space.
 Based on the Nyquist-Shannon theorem.
