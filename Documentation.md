@@ -25,33 +25,57 @@ How it works:
 4. Blur with that Gaussian at render time.
 
 Implementation:
+
 Clone the repository and create an anaconda environment using
+
 git clone
+
 cd mip-splatting
+
 conda create -y -n mip-splatting python=3.8
+
 conda activate mip-splatting
+
 pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 -f
+
 https://download.pytorch.org/whl/torch_stable.html
+
 conda install cudatoolkit-dev=11.3 -c conda-forge
+
 pip install -r requirements.txt
+
 pip install submodules/diff-gaussian-rasterization
+
 pip install submodules/simple-knn/
 
+
 Blender Dataset
+
 Please download and unzip nerf_synthetic.zip from the [NeRF's official Google Drive](https://drive.google.com/drive/folders/128yBriW1IG_3NJ5Rp7APSTZsJqdJdfc1). 
 Then generate multi-scale blender dataset with
+
 python convert_blender_data.py --blender_dir nerf_synthetic/ --out_dir multi-scale
 
+
 Mip-NeRF 360 Dataset
+
 Please download the data from the [Mip-NeRF 360](https://jonbarron.info/mipnerf360/) and
 request the authors for the treehill and flowers scenes.
+
 #single-scale training and multi-scale testing on NeRF-synthetic dataset
+
 python scripts/run_nerf_synthetic_stmt.py
+
 #multi-scale training and multi-scale testing on NeRF-synthetic dataset
+
 python scripts/run_nerf_synthetic_mtmt.py
+
 #single-scale training and single-scale testing on the mip-nerf 360 dataset
+
 python scripts/run_mipnerf360.py
+
 #single-scale training and multi-scale testing on the mip-nerf 360 dataset
+
 python scripts/run_mipnerf360_stmt.py 
 
 Expected Results
