@@ -3,9 +3,9 @@ Mip-Splatting – Alias-free 3D Gaussian Splatting:
 "Mip-Splatting" extends 3D Gaussian Splatting (3DGS) to eliminate zoom-dependent artifacts (erosion when zooming in; aliasing/over-bloat when zooming out) by applying principled filtering in both 3D and 2D. It leverages sampling theory (Nyquist limits) to ensure each Gaussian carries only resolvable frequencies and is rendered with a dynamic, zoom-aware blur.
 
 Problems Addressed:
-1. Zoom-In “Erosion”
+1. Zoom-In “Erosion”:
 • Fine details shrink below a pixel and vanish, because the fixed screen dilation is too small.
-2. Zoom-Out “Over-Dilation” & Aliasing
+2. Zoom-Out “Over-Dilation” & Aliasing:
 • Distant blobs cover fractions of a pixel but still receive full dilation, causing bloated halos and jagged/flickering edges.
 
 Method 1: 3D Frequency Regularization
