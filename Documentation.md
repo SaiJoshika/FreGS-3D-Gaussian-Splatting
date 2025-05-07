@@ -10,7 +10,7 @@ Distant blobs cover fractions of a pixel but still receive full dilation, causin
 
 ## Method 1: 3D Frequency Regularization
 
-###Goal: Remove ultra-high frequencies that no view can resolve.
+### Goal: Remove ultra-high frequencies that no view can resolve.
 1. Track each Gaussian’s maximal sampling rate (smallest on-screen footprint) during training.
 2. Compute a 3D low-pass Gaussian whose standard deviation = Nyquist limit of that footprint.
 3. Analytically combined with the original covariance.
@@ -36,16 +36,23 @@ conda create -y -n mip-splatting python=3.8
 conda activate mip-splatting
 
 pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 -f
-
 https://download.pytorch.org/whl/torch_stable.html
+
+![image](https://github.com/user-attachments/assets/55d3d864-2644-4240-ad7f-e4adc6ec0df0)
+
 
 conda install cudatoolkit-dev=11.3 -c conda-forge
 
 pip install -r requirements.txt
 
+![image](https://github.com/user-attachments/assets/b11fa155-179d-4f62-8af2-8c1252fdde92)
+
 pip install submodules/diff-gaussian-rasterization
 
 pip install submodules/simple-knn/
+
+![image](https://github.com/user-attachments/assets/4e33ef45-2bb7-4a6e-a6b5-c97a67cff556)
+
 
 ### Blender Dataset
 
@@ -74,6 +81,9 @@ python scripts/run_mipnerf360.py
 #single-scale training and multi-scale testing on the mip-nerf 360 dataset
 
 python scripts/run_mipnerf360_stmt.py 
+
+![image](https://github.com/user-attachments/assets/aa93ef1b-bebe-4105-a5cb-a34fa3922ab6)
+
 
 ## Expected Results
 1. Close-up & wide-angle renders free of erosion or bloating.
