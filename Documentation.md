@@ -4,15 +4,15 @@ Mip-Splatting – Alias-free 3D Gaussian Splatting:
 
 Problems Addressed:
 1. Zoom-In “Erosion”:
-• Fine details shrink below a pixel and vanish, because the fixed screen dilation is too small.
+Fine details shrink below a pixel and vanish, because the fixed screen dilation is too small.
 2. Zoom-Out “Over-Dilation” & Aliasing:
-• Distant blobs cover fractions of a pixel but still receive full dilation, causing bloated halos and jagged/flickering edges.
+Distant blobs cover fractions of a pixel but still receive full dilation, causing bloated halos and jagged/flickering edges.
 
 Method 1: 3D Frequency Regularization
 Goal: Remove ultra-high frequencies that no view can resolve.
-• Track each Gaussian’s maximal sampling rate (smallest on-screen footprint) during training.
-• Compute a 3D low-pass Gaussian whose standard deviation = Nyquist limit of that footprint.
-• Analytically combined with the original covariance.
+1. Track each Gaussian’s maximal sampling rate (smallest on-screen footprint) during training.
+2. Compute a 3D low-pass Gaussian whose standard deviation = Nyquist limit of that footprint.
+3. Analytically combined with the original covariance.
 
 Method 2: 2D Mipmap Filter (Zoom-Aware Blur)
 Core idea: Replace the one-size-fits-all screen blur with a blur whose size automatically matches how many pixels each projected blob covers.
@@ -43,19 +43,19 @@ python convert_blender_data.py --blender_dir nerf_synthetic/ --out_dir multi-sca
 Mip-NeRF 360 Dataset
 Please download the data from the [Mip-NeRF 360](https://jonbarron.info/mipnerf360/) and
 request the authors for the treehill and flowers scenes.
-# single-scale training and multi-scale testing on NeRF-synthetic dataset
+#single-scale training and multi-scale testing on NeRF-synthetic dataset
 python scripts/run_nerf_synthetic_stmt.py
-# multi-scale training and multi-scale testing on NeRF-synthetic dataset
+#multi-scale training and multi-scale testing on NeRF-synthetic dataset
 python scripts/run_nerf_synthetic_mtmt.py
-# single-scale training and single-scale testing on the mip-nerf 360 dataset
+#single-scale training and single-scale testing on the mip-nerf 360 dataset
 python scripts/run_mipnerf360.py
-# single-scale training and multi-scale testing on the mip-nerf 360 dataset
+#single-scale training and multi-scale testing on the mip-nerf 360 dataset
 python scripts/run_mipnerf360_stmt.py 
 
 Expected Results
-• Close-up & wide-angle renders free of erosion or bloating.
-• Smooth transitions across zoom levels without retraining.
-• Real-time performance maintained with minimal overhead.
+1. Close-up & wide-angle renders free of erosion or bloating.
+2. Smooth transitions across zoom levels without retraining.
+3. Real-time performance maintained with minimal overhead.
 
 
 ![image](https://github.com/user-attachments/assets/62af74e1-8375-4a35-a28e-30f67e5747c6)
