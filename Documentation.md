@@ -75,7 +75,7 @@ python scripts/run_mipnerf360.py
 
 python scripts/run_mipnerf360_stmt.py 
 
-## 6.Expected Results
+## Expected Results
 1. Close-up & wide-angle renders free of erosion or bloating.
 2. Smooth transitions across zoom levels without retraining.
 3. Real-time performance maintained with minimal overhead.
