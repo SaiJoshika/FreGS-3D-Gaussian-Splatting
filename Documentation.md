@@ -9,12 +9,14 @@ Fine details shrink below a pixel and vanish, because the fixed screen dilation 
 Distant blobs cover fractions of a pixel but still receive full dilation, causing bloated halos and jagged/flickering edges.
 
 Method 1: 3D Frequency Regularization
+
 Goal: Remove ultra-high frequencies that no view can resolve.
 1. Track each Gaussian’s maximal sampling rate (smallest on-screen footprint) during training.
 2. Compute a 3D low-pass Gaussian whose standard deviation = Nyquist limit of that footprint.
 3. Analytically combined with the original covariance.
 
 Method 2: 2D Mipmap Filter (Zoom-Aware Blur)
+
 Core idea: Replace the one-size-fits-all screen blur with a blur whose size automatically matches how many pixels each projected blob covers.
 How it works:
 1. Treat each 2D splat like a tiny texture.
