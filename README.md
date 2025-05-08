@@ -90,6 +90,3 @@ Then use our [online viewer](https://niujinshuchong.github.io/mip-splatting-demo
 * **Qualitative:** Eliminates erosion of thin structures and prevents bloated halos or shimmering at distant views.
 
  <img width="248" alt="image" src="https://github.com/user-attachments/assets/63cd01a5-15e0-45f0-80fc-c3c055057e26" />
-
-
-
