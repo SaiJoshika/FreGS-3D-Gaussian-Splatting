@@ -8,6 +8,13 @@ Fine details shrink below a pixel and vanish, because the fixed screen dilation 
 2. Zoom-Out “Over-Dilation” & Aliasing:
 Distant blobs cover fractions of a pixel but still receive full dilation, causing bloated halos and jagged/flickering edges.
 
+## Model
+Mip-Splatting builds directly on the 3D Gaussian Splatting representation, so the “model” is:
+A mixture of anisotropic 3D Gaussians, each parameterized by
+  1. A 3D center,
+  2. A 3×3 covariance (shape/orientation), and
+  3. view-dependent color encoded as spherical-harmonic coefficients.
+
 ## Method 1: 3D Frequency Regularization
 
 ### Goal: Remove ultra-high frequencies that no view can resolve.
@@ -84,13 +91,30 @@ python scripts/run_mipnerf360_stmt.py
 
 ![image](https://github.com/user-attachments/assets/aa93ef1b-bebe-4105-a5cb-a34fa3922ab6)
 
+## Input
+A folder of RGB photographs of your scene.
+Each image must have known intrinsics (focal length, principal point) and extrinsics (camera pose), typically produced by a Structure-from-Motion tool like COLMAP.
 
 ## Expected Results
 1. Close-up & wide-angle renders free of erosion or bloating.
 2. Smooth transitions across zoom levels without retraining.
 3. Real-time performance maintained with minimal overhead.
 
+<img width="398" alt="image" src="https://github.com/user-attachments/assets/5783b749-a666-4bc8-a81b-9f4c44148134" />
 
-![image](https://github.com/user-attachments/assets/62af74e1-8375-4a35-a28e-30f67e5747c6)
+## Limitations
+### 1.Approximation Error in 2D Mip Filter
+
+Mip-Splatting uses a Gaussian to approximate the ideal box filter of a camera pixel for efficiency. When a projected Gaussian splat is very small on screen (e.g. under extreme zoom-out), this approximation deviates more from the true box filter, introducing small rendering errors .
+
+### 2.Extra Training Overhead
+
+To enforce Nyquist limits, the sampling rate of each 3D Gaussian must be recomputed every m = 100 training iterations. Currently this is done in PyTorch, which incurs a modest slowdown. A dedicated CUDA implementation or a precomputed data structure (since sampling rates depend only on fixed camera poses/intrinsics) could reduce this overhead.
+
+### 3.Residual Frequency Leakage at Extremes
+
+Although the 3D smoothing and 2D Mip filters together eliminate most zoom artifacts, very extreme changes in sampling rate (far beyond those in the training set) may still reveal slight aliasing or smoothing errors due to the Gaussian approximations.
+
+
 
 
